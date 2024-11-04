@@ -21,6 +21,9 @@
                     <x-nav-link href="{{ url('/livros') }}">
                         {{ __('Livros') }}
                     </x-nav-link>
+                    <x-nav-link href="{{ url('/emprestimos') }}">
+                        {{ __('Emprestimos') }}
+                    </x-nav-link>
                 </div>
             </div>
 
