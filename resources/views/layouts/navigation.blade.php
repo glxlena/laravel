@@ -12,17 +12,14 @@
 
                 <!-- Navigation Links -->
                 <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
-                    <x-nav-link href="{{ url('/dashboard') }}">
-                        {{ __('Dashboard') }}
+                    <x-nav-link href="{{ url('/diaries') }}">
+                        {{ __('Meu Diário') }}
                     </x-nav-link>
-                    <x-nav-link href="{{ url('/alunos') }}">
-                        {{ __('Alunos') }}
+                    <x-nav-link href="{{ url('/memories') }}">
+                        {{ __('Memórias Semanais') }}
                     </x-nav-link>
-                    <x-nav-link href="{{ url('/livros') }}">
-                        {{ __('Livros') }}
-                    </x-nav-link>
-                    <x-nav-link href="{{ url('/emprestimos') }}">
-                        {{ __('Emprestimos') }}
+                    <x-nav-link href="{{ url('/goals') }}">
+                        {{ __('Objetivos do Mês') }}
                     </x-nav-link>
                 </div>
             </div>

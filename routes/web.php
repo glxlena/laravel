@@ -1,9 +1,9 @@
 <?php
 
-use App\Http\Controllers\AlunoController;
-use App\Http\Controllers\LivroController;
+use App\Http\Controllers\DiaryController;
+use App\Http\Controllers\MemoryController;
+use App\Http\Controllers\GoalController;
 use App\Http\Controllers\ProfileController;
-use App\Http\Controllers\EmprestimoController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
@@ -15,14 +15,13 @@ Route::get('/dashboard', function () {
 })->middleware(['auth', 'verified'])->name('dashboard');
 
 Route::middleware('auth')->group(function () {
-    Route::resource('alunos', AlunoController::class);
-    Route::resource('livros', LivroController::class);
-    Route::resource('emprestimos', EmprestimoController::class);
+    Route::resource('diaries', DiaryController::class);
+    Route::resource('memories', MemoryController::class);
+    Route::resource('goals', GoalController::class);
+    Route::patch('goals/{goal}/toggle', [GoalController::class, 'toggleComplete'])->name('goals.toggle');
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
-    Route::post('emprestimos/{emprestimo}/devolver',
-    [EmprestimoController::class, 'devolver'])->name('emprestimos.devolver');
 });
 
 require __DIR__.'/auth.php';
