@@ -1,5 +1,3 @@
-<!-- resources/views/livros/create.blade.php -->
-
 @extends('layouts.app')
 
 @section('slot')
@@ -7,30 +5,25 @@
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
             <div class="bg-white dark:bg-gray-800 overflow-hidden shadow-sm sm:rounded-lg">
                 <div class="p-6 bg-white dark:bg-gray-800">
-                    <h1 class="text-2xl font-semibold text-gray-800 dark:text-gray-200 mb-6">Adicionar Novo Livro</h1>
+                    <h1 class="text-2xl font-semibold text-gray-800 dark:text-gray-200 mb-6">Adicionar Nova Memória</h1>
 
-                    <form action="{{ route('livros.store') }}" method="POST">
+                    <form action="{{ route('memories.store') }}" method="POST" enctype="multipart/form-data">
                         @csrf
                         <div class="mb-4">
-                            <label for="titulo" class="block text-sm font-medium text-gray-700 dark:text-gray-300">Título:</label>
-                            <input type="text" name="titulo" id="titulo" class="form-input mt-1 block w-full" required>
+                            <label for="description" class="block text-sm font-medium text-gray-700 dark:text-gray-300">Descrição:</label>
+                            <textarea name="description" id="description" class="form-input mt-1 block w-full" rows="4" required></textarea>
                         </div>
+                        
                         <div class="mb-4">
-                            <label for="autor" class="block text-sm font-medium text-gray-700 dark:text-gray-300">Autor:</label>
-                            <input type="text" name="autor" id="autor" class="form-input mt-1 block w-full" required>
+                            <label for="date" class="block text-sm font-medium text-gray-700 dark:text-gray-300">Data:</label>
+                            <input type="date" name="date" id="date" class="form-input mt-1 block w-full">
                         </div>
+
                         <div class="mb-4">
-                            <label for="isbn" class="block text-sm font-medium text-gray-700 dark:text-gray-300">ISBN:</label>
-                            <input type="text" name="isbn" id="isbn" class="form-input mt-1 block w-full" required>
+                            <label for="photo" class="block text-sm font-medium text-gray-700 dark:text-gray-300">Selecionar Imagem:</label>
+                            <input type="file" name="photo" id="photo" class="form-input mt-1 block w-full">
                         </div>
-                        <div class="mb-4">
-                            <label for="editora" class="block text-sm font-medium text-gray-700 dark:text-gray-300">Editora:</label>
-                            <input type="text" name="editora" id="editora" class="form-input mt-1 block w-full" required>
-                        </div>
-                        <div class="mb-4">
-                            <label for="ano_publicacao" class="block text-sm font-medium text-gray-700 dark:text-gray-300">Ano de Publicação:</label>
-                            <input type="number" name="ano_publicacao" id="ano_publicacao" class="form-input mt-1 block w-full" required>
-                        </div>
+
                         <button type="submit" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">Salvar</button>
                     </form>
                 </div>

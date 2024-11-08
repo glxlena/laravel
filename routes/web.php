@@ -18,6 +18,7 @@ Route::middleware('auth')->group(function () {
     Route::resource('diaries', DiaryController::class);
     Route::resource('memories', MemoryController::class);
     Route::resource('goals', GoalController::class);
+    Route::post('goals/{goal}/toggle', [GoalController::class, 'toggleComplete'])->name('goals.toggleComplete');
     Route::patch('goals/{goal}/toggle', [GoalController::class, 'toggleComplete'])->name('goals.toggle');
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');

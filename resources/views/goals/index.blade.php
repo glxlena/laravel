@@ -5,42 +5,55 @@
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
             <div class="bg-white dark:bg-gray-800 overflow-hidden shadow-sm sm:rounded-lg">
                 <div class="p-6 bg-white dark:bg-gray-800">
-                    <h1 class="text-2xl font-semibold text-gray-800 dark:text-gray-200 mb-6">Lista de Emprestimos</h1>
+                    <h1 class="text-2xl font-semibold text-gray-800 dark:text-gray-200 mb-6">Lista de Objetivos</h1>
 
-                    <a href="{{ route('emprestimos.create') }}" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded mb-4">Novo Emprestimo</a>
+                    <a href="{{ route('goals.create') }}" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded mb-4">Novo Objetivo</a>
 
                     <div class="overflow-x-auto">
                         <table class="w-full divide-y divide-gray-200">
                             <thead class="bg-gray-50 dark:bg-gray-700">
                                 <tr>
-                                    <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-300 uppercase tracking-wider">Aluno</th>
-                                    <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-300 uppercase tracking-wider">Livro</th>
-                                    <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-300 uppercase tracking-wider">Data do Emprestimo</th>
-                                    <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-300 uppercase tracking-wider">Data de Devolução</th>
+                                    <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-300 uppercase tracking-wider">Status</th>
+                                    <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-300 uppercase tracking-wider">Descrição</th>
+                                    <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-300 uppercase tracking-wider">Prioridade</th>
                                     <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-300 uppercase tracking-wider">Ações</th>
                                 </tr>
                             </thead>
                             <tbody class="bg-white divide-y divide-gray-200">
-                                @forelse ($emprestimos as $emprestimo)
+                                @foreach ($goals as $goal)
                                     <tr>
-                                        <td class="px-6 py-4 whitespace-nowrap">{{ $emprestimo->aluno->name }}</td>
-                                        <td class="px-6 py-4 whitespace-nowrap">{{ $emprestimo->livro->titulo }}</td>
-                                        <td class="px-6 py-4 whitespace-nowrap">{{ date('d/m/Y', strtotime($emprestimo->data_emprestimo))}}</td>
-                                        <td class="px-6 py-4 whitespace-nowrap">{{ $emprestimo->data_devolucao ? date('d/m/Y', strtotime($emprestimo->data_emprestimo)) : 'Ainda não devolvido.'}}</td>
                                         <td class="px-6 py-4 whitespace-nowrap">
-                                        @if(!$emprestimo->data_devolucao)
-                                            <form action="{{ route('emprestimos.devolver', $emprestimo->id) }}" method="POST" class="inline-block">
+                                            <form action="{{ route('goals.toggleComplete', $goal->id) }}" method="POST" class="inline-block">
                                                 @csrf
-                                                <button type="submit" class="text-red-600 hover:text-red-900">Devolver</button>
+                                                <input type="checkbox" name="is_completed" value="1" 
+                                                    {{ $goal->is_completed ? 'checked' : '' }} 
+                                                    onchange="this.form.submit()" class="cursor-pointer">
                                             </form>
-                                        @endif
+                                        </td>
+                                        <td class="px-6 py-4 whitespace-nowrap {{ $goal->is_completed ? 'line-through text-red-500' : '' }}">
+                                            {{ $goal->description }}
+                                        </td>
+                                        <td class="px-6 py-4 whitespace-nowrap">
+                                            <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full" 
+                                                style="background-color: 
+                                                    @if($goal->priority == 'alta') #f87171; /* vermelho */
+                                                    @elseif($goal->priority == 'media') #fbbf24; /* amarelo */
+                                                    @elseif($goal->priority == 'baixa') #4ade80; /* verde */
+                                                    @endif
+                                                color: white;">
+                                                {{ ucfirst($goal->priority) }}
+                                            </span>
+                                        </td>
+                                        <td class="px-6 py-4 whitespace-nowrap">
+                                            <a href="{{ route('goals.edit', $goal->id) }}" class="text-indigo-600 hover:text-indigo-900 mr-3">Editar</a>
+                                            <form action="{{ route('goals.destroy', $goal->id) }}" method="POST" class="inline-block">
+                                                @csrf
+                                                @method('DELETE')
+                                                <button type="submit" class="text-red-600 hover:text-red-900">Excluir</button>
+                                            </form>
                                         </td>
                                     </tr>
-                                @empty
-                                    <tr>
-                                        <td colspan="5" class="px-6 py-4 whitespace-nowrap text-center text-gray-500 dark:text-gray-300">Nenhum emprestimo encontrado.</td>
-                                    </tr>
-                                @endforelse
+                                @endforeach
                             </tbody>
                         </table>
                     </div>

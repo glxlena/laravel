@@ -21,8 +21,15 @@ class GoalController extends Controller
 
     public function store(Request $request)
     {
+        $request->validate([
+            'description' => 'required|string|max:255',
+            'priority' => 'required|in:baixa,media,alta',
+            'is_completed' => 'nullable|boolean',
+        ]);
+
         Goal::create($request->all());
-        return redirect()->route('goals.index')->with('success', 'Objjetivo salvo com sucesso!');
+
+        return redirect()->route('goals.index')->with('success', 'Objetivo salvo com sucesso!');
     }
 
     public function edit(Goal $goal)
@@ -32,7 +39,14 @@ class GoalController extends Controller
 
     public function update(Request $request, Goal $goal)
     {
+        $request->validate([
+            'description' => 'required|string|max:255',
+            'priority' => 'required|in:baixa,media,alta',
+            'is_completed' => 'nullable|boolean',
+        ]);
+
         $goal->update($request->all());
+
         return redirect()->route('goals.index')->with('success', 'Objetivo alterado com sucesso!');
     }
 

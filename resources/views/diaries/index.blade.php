@@ -5,7 +5,7 @@
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
             <div class="bg-white dark:bg-gray-800 overflow-hidden shadow-sm sm:rounded-lg">
                 <div class="p-6 bg-white dark:bg-gray-800">
-                    <h1 class="text-2xl font-semibold text-gray-800 dark:text-gray-200 mb-6">Meus Registros</h1>
+                    <h1 class="text-2xl font-semibold text-gray-800 dark:text-gray-200 mb-6">Meu Diário</h1>
 
                     <a href="{{ route('diaries.create') }}" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded mb-4">Novo Registro</a>
 
@@ -24,7 +24,7 @@
                                     <tr>
                                         <td class="px-6 py-4 whitespace-nowrap">{{ $diary->date }}</td>
                                         <td class="px-6 py-4 whitespace-nowrap">{{ $diary->title }}</td>
-                                        <td class="px-6 py-4 whitespace-nowrap">{{ Str::limit($diary->description, 50) }}</td>
+                                        <td class="px-6 py-4 whitespace-nowrap">{{ Str::limit($diary->description, 200) }}</td>
                                         <td class="px-6 py-4 whitespace-nowrap">
                                             <a href="{{ route('diaries.edit', $diary->id) }}" class="text-indigo-600 hover:text-indigo-900 mr-3">Editar</a>
                                             <form action="{{ route('diaries.destroy', $diary->id) }}" method="POST" class="inline-block">
