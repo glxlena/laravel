@@ -5,7 +5,9 @@
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
             <div class="bg-white dark:bg-gray-800 overflow-hidden shadow-sm sm:rounded-lg">
                 <div class="p-6 bg-white dark:bg-gray-800">
-                    <h1 class="text-2xl font-semibold text-gray-800 dark:text-gray-200 mb-6">Lista de Objetivos</h1>
+                    <h1 class="text-2xl font-semibold text-gray-800 dark:text-gray-200 mb-6 text-center">Lista de Objetivos</h1>
+                    <br>
+                    <h3 class="text-1xl font-semibold text-gray-800 dark:text-gray-200 mb-4 text-center">Quais seus objetivos esse mês?</h3>
 
                     <a href="{{ route('goals.create') }}" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded mb-4">Novo Objetivo</a>
 

@@ -5,7 +5,7 @@
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
             <div class="bg-white dark:bg-gray-800 overflow-hidden shadow-sm sm:rounded-lg">
                 <div class="p-6 bg-white dark:bg-gray-800">
-                    <h1 class="text-2xl font-semibold text-gray-800 dark:text-gray-200 mb-6">Editar Objetivo</h1>
+                    <h1 class="text-2xl font-semibold text-gray-800 dark:text-gray-200 mb-6 text-center">Editar Objetivo</h1>
 
                     <form action="{{ route('goals.update', $goal->id) }}" method="POST">
                         @csrf
@@ -22,6 +22,9 @@
                                 <option value="alta" @if($goal->priority == 'alta') selected @endif>Alta</option>
                             </select>
                         </div>
+                        <a href="{{ route('goals.index') }}" class="text-blue-500 hover:text-blue-700 mb-4 inline-block">
+                            <i class="fas fa-arrow-left"></i> Voltar
+                        </a>
                         <button type="submit" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">Atualizar Objetivo</button>
                     </form>
                 </div>

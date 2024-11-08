@@ -41,6 +41,11 @@ class MemoryController extends Controller
         return redirect()->route('memories.index')->with('success', 'Memória salva com sucesso!');
     }   
 
+    public function show($id)
+    {
+        $memory = Memory::findOrFail($id);
+        return view('memories.details', compact('memory'));
+    }
 
     public function edit(Memory $memory)
     {

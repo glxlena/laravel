@@ -16,7 +16,9 @@ Route::get('/dashboard', function () {
 
 Route::middleware('auth')->group(function () {
     Route::resource('diaries', DiaryController::class);
+    Route::get('/diaries/{id}', [DiaryController::class, 'show'])->name('diaries.show');
     Route::resource('memories', MemoryController::class);
+    Route::get('/memories/{id}', [MemoryController::class, 'show'])->name('memories.show');
     Route::resource('goals', GoalController::class);
     Route::post('goals/{goal}/toggle', [GoalController::class, 'toggleComplete'])->name('goals.toggleComplete');
     Route::patch('goals/{goal}/toggle', [GoalController::class, 'toggleComplete'])->name('goals.toggle');

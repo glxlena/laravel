@@ -24,6 +24,12 @@ class DiaryController extends Controller
         return redirect()->route('diaries.index');
     }
 
+    public function show($id)
+    {
+        $diary = Diary::findOrFail($id);
+        return view('diaries.details', compact('diary'));
+    }
+
     public function edit(Diary $diary)
     {
         return view('diaries.edit', compact('diary'));

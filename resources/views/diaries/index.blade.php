@@ -5,7 +5,9 @@
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
             <div class="bg-white dark:bg-gray-800 overflow-hidden shadow-sm sm:rounded-lg">
                 <div class="p-6 bg-white dark:bg-gray-800">
-                    <h1 class="text-2xl font-semibold text-gray-800 dark:text-gray-200 mb-6">Meu Diário</h1>
+                    <h1 class="text-2xl font-semibold text-gray-800 dark:text-gray-200 mb-6 text-center">Meu Diário</h1>
+                    <br>
+                    <h3 class="text-1xl font-semibold text-gray-800 dark:text-gray-200 mb-4 text-center">Bem vindo(a) ao seu diário virtual! O que gostaria de registrar hoje?</h3>
 
                     <a href="{{ route('diaries.create') }}" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded mb-4">Novo Registro</a>
 
@@ -26,13 +28,16 @@
                                         <td class="px-6 py-4 whitespace-nowrap">{{ $diary->title }}</td>
                                         <td class="px-6 py-4 whitespace-nowrap">{{ Str::limit($diary->description, 200) }}</td>
                                         <td class="px-6 py-4 whitespace-nowrap">
+                                            <a href="{{ route('diaries.show', $diary->id) }}" class="text-blue-600 hover:text-blue-900 mr-3">Ver mais</a>
+                                            <br>
                                             <a href="{{ route('diaries.edit', $diary->id) }}" class="text-indigo-600 hover:text-indigo-900 mr-3">Editar</a>
+                                            <br>
                                             <form action="{{ route('diaries.destroy', $diary->id) }}" method="POST" class="inline-block">
                                                 @csrf
                                                 @method('DELETE')
                                                 <button type="submit" class="text-red-600 hover:text-red-900">Excluir</button>
                                             </form>
-                                        </td>
+                                        </td>                                        
                                     </tr>
                                 @empty
                                     <tr>
