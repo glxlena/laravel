@@ -26,7 +26,7 @@
                                     <tr>
                                         <td class="px-6 py-4 whitespace-nowrap">{{ $diary->date }}</td>
                                         <td class="px-6 py-4 whitespace-nowrap">{{ $diary->title }}</td>
-                                        <td class="px-6 py-4 whitespace-nowrap">{{ Str::limit($diary->description, 200) }}</td>
+                                        <td class="px-6 py-4 whitespace-nowrap">{{ Str::limit($diary->description, 100) }}</td>
                                         <td class="px-6 py-4 whitespace-nowrap">
                                             <a href="{{ route('diaries.show', $diary->id) }}" class="text-blue-600 hover:text-blue-900 mr-3">Ver mais</a>
                                             <br>

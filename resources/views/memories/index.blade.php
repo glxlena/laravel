@@ -26,7 +26,7 @@
                             <tbody class="bg-white divide-y divide-gray-200">
                                 @forelse ($memories as $memory)
                                     <tr>
-                                        <td class="px-6 py-4 whitespace-nowrap">{{ $memory->description }}</td>
+                                        <td class="px-6 py-4 whitespace-nowrap">{{ Str::limit($memory->description, 100)}}</td>
                                         <td class="px-6 py-4 whitespace-nowrap">{{ $memory->date}}</td>
                                         <td class="px-6 py-4 whitespace-nowrap">
                                             @if ($memory->photo)

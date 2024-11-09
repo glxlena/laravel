@@ -5,12 +5,13 @@ namespace App\Http\Controllers;
 use App\Models\Memory;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class MemoryController extends Controller
 {
     public function index()
     {
-        $memories = Memory::all();
+        $memories = Memory::where('user_id', Auth::id())->get();
         return view('memories.index', compact('memories'));
     }
 
@@ -28,6 +29,7 @@ class MemoryController extends Controller
         ]);
 
         $memory = new Memory();
+        $memory->user_id = Auth::id();
         $memory->description = $request->input('description');
         $memory->date = $request->input('date');
 
@@ -39,16 +41,20 @@ class MemoryController extends Controller
         $memory->save();
 
         return redirect()->route('memories.index')->with('success', 'Memória salva com sucesso!');
-    }   
+    }
 
     public function show($id)
     {
-        $memory = Memory::findOrFail($id);
+        $memory = Memory::where('id', $id)->where('user_id', Auth::id())->firstOrFail();
         return view('memories.details', compact('memory'));
     }
 
     public function edit(Memory $memory)
     {
+        if ($memory->user_id !== Auth::id()) {
+            abort(403);
+        }
+
         return view('memories.edit', compact('memory'));
     }
 
@@ -59,35 +65,35 @@ class MemoryController extends Controller
             'description' => 'required|string',
             'date' => 'required|date',
         ]);
-        $memory = Memory::findOrFail($id);
-        $memory->date = $request->input('date');
+
+        $memory = Memory::where('id', $id)->where('user_id', Auth::id())->firstOrFail();
         $memory->description = $request->input('description');
-        
+        $memory->date = $request->input('date');
+
         if ($request->has('remove_photo') && $memory->photo) {
             Storage::disk('public')->delete($memory->photo);
             $memory->photo = null;
         }
-        
+
         if ($request->hasFile('photo')) {
             if ($memory->photo && Storage::disk('public')->exists($memory->photo)) {
                 Storage::disk('public')->delete($memory->photo);
             }
             $path = $request->file('photo')->store('photos', 'public');
-            if ($path) {
-                $memory->photo = $path;
-            } else {
-                return redirect()->back()->withErrors(['photo' => 'Falha ao fazer upload da nova imagem.']);
-            }
+            $memory->photo = $path;
         }
-        
+
         $memory->save();
 
         return redirect()->route('memories.index')->with('success', 'Memória atualizada com sucesso!');
     }
 
-
     public function destroy(Memory $memory)
     {
+        if ($memory->user_id !== Auth::id()) {
+            abort(403);
+        }
+
         $memory->delete();
         return redirect()->route('memories.index')->with('success', 'Memória excluída.');
     }

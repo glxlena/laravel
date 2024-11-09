@@ -4,13 +4,13 @@ namespace App\Http\Controllers;
 
 use App\Models\Goal;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class GoalController extends Controller
 {
-
     public function index()
     {
-        $goals = Goal::all();
+        $goals = Goal::where('user_id', Auth::id())->get();
         return view('goals.index', compact('goals'));
     }
 
@@ -21,29 +21,27 @@ class GoalController extends Controller
 
     public function store(Request $request)
     {
-        $request->validate([
-            'description' => 'required|string|max:255',
-            'priority' => 'required|in:baixa,media,alta',
-            'is_completed' => 'nullable|boolean',
-        ]);
-
-        Goal::create($request->all());
+        $data = $request->all();
+        $data['user_id'] = Auth::id();
+        Goal::create($data);
 
         return redirect()->route('goals.index')->with('success', 'Objetivo salvo com sucesso!');
     }
 
     public function edit(Goal $goal)
     {
+        if ($goal->user_id !== Auth::id()) {
+            abort(403);
+        }
+
         return view('goals.edit', compact('goal'));
     }
 
     public function update(Request $request, Goal $goal)
     {
-        $request->validate([
-            'description' => 'required|string|max:255',
-            'priority' => 'required|in:baixa,media,alta',
-            'is_completed' => 'nullable|boolean',
-        ]);
+        if ($goal->user_id !== Auth::id()) {
+            abort(403);
+        }
 
         $goal->update($request->all());
 
@@ -52,6 +50,10 @@ class GoalController extends Controller
 
     public function toggleComplete(Goal $goal)
     {
+        if ($goal->user_id !== Auth::id()) {
+            abort(403);
+        }
+
         $goal->is_completed = !$goal->is_completed;
         $goal->save();
 
@@ -60,6 +62,10 @@ class GoalController extends Controller
 
     public function destroy(Goal $goal)
     {
+        if ($goal->user_id !== Auth::id()) {
+            abort(403);
+        }
+
         $goal->delete();
         return redirect()->route('goals.index')->with('success', 'Objetivo excluído.');
     }

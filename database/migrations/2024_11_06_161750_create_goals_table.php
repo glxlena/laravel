@@ -11,9 +11,12 @@ return new class extends Migration
         Schema::create('goals', function (Blueprint $table) {
             $table->id();
             $table->string('description');
-            $table->enum('priority',['baixa', 'media', 'alta'])->default('baixa');
+            $table->enum('priority', ['baixa', 'media', 'alta'])->default('baixa');
             $table->boolean('is_completed')->default(false);
+            $table->unsignedBigInteger('user_id');
             $table->timestamps();
+
+            $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
         });
     }
 
