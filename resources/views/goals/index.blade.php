@@ -38,10 +38,9 @@
                                         <td class="px-6 py-4 whitespace-nowrap">
                                             <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full" 
                                                 style="background-color: 
-                                                    @if($goal->priority == 'alta') #f87171; /* vermelho */
-                                                    @elseif($goal->priority == 'media') #fbbf24; /* amarelo */
-                                                    @elseif($goal->priority == 'baixa') #4ade80; /* verde */
-                                                    @endif
+                                                    @if($goal->priority == 'alta') #f87171;
+                                                    @elseif($goal->priority == 'media') #fbbf24; 
+                                                    @elseif($goal->priority == 'baixa') #4ade80; 
                                                 color: white;">
                                                 {{ ucfirst($goal->priority) }}
                                             </span>
